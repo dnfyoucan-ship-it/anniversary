@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>결혼기념일 축하드려요 💐</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fdf6ee;
+      --blush: #f2c4b0;
+      --rose: #c9736a;
+      --deep: #7a3e3a;
+      --gold: #c8a96e;
+      --gold-light: #e8d5a8;
+      --text: #3a2a28;
+      --text-light: #8a6a65;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Noto Serif KR', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Floating petals ── */
+    .petals {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -60px;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.5; }
+      100% { transform: translateY(110vh) rotate(720deg) translateX(40px); opacity: 0; }
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 0 0 60px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      background: linear-gradient(165deg, #7a3e3a 0%, #c9736a 45%, #f2c4b0 100%);
+      padding: 60px 28px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 90%, rgba(200,169,110,0.25) 0%, transparent 50%);
+    }
+    .hero-ornament {
+      font-size: 2.4rem;
+      letter-spacing: .3em;
+      opacity: .85;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .hero-label {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: .95rem;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: .12em;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      position: relative;
+      text-shadow: 0 2px 24px rgba(90,30,20,0.25);
+    }
+    .hero-title span {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-top: 6px;
+    }
+    .hero-date {
+      margin-top: 22px;
+      position: relative;
+      display: inline-block;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 40px;
+      padding: 8px 24px;
+      font-size: .88rem;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: .08em;
+      backdrop-filter: blur(4px);
+    }
+
+    /* curved bottom */
+    .hero-wave {
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 55px;
+    }
+    .hero-wave svg { width: 100%; height: 100%; display: block; }
+
+    /* ── Rings banner ── */
+    .rings {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 28px 0 10px;
+    }
+    .ring {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 4px solid;
+      display: flex;align-items:center;justify-content:center;
+    }
+    .ring-gold { border-color: var(--gold); background: var(--gold-light); }
+    .ring-rose { border-color: var(--rose); background: #f9e8e4; margin-left: -16px; }
+    .ring-heart { font-size: 1.3rem; }
+
+    /* ── Section card ── */
+    .card {
+      margin: 18px 20px 0;
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px 26px;
+      box-shadow: 0 4px 30px rgba(122,62,58,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: linear-gradient(180deg, var(--gold), var(--rose));
+      border-radius: 20px 0 0 20px;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--deep);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon { font-size: 1.15rem; }
+    .card-body {
+      font-family: 'Noto Serif KR', serif;
+      font-size: .97rem;
+      line-height: 1.95;
+      color: var(--text);
+      word-break: keep-all;
+    }
+    .card-body em {
+      color: var(--rose);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ── Timeline ── */
+    .timeline { padding: 6px 0; }
+    .tl-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn .5s forwards;
+    }
+    .tl-item:nth-child(1) { animation-delay: .2s; }
+    .tl-item:nth-child(2) { animation-delay: .4s; }
+    .tl-item:nth-child(3) { animation-delay: .6s; }
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .tl-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      flex-shrink: 0;
+      display: flex;align-items:center;justify-content:center;
+      font-size: 1rem;
+      box-shadow: 0 2px 10px rgba(200,169,110,0.4);
+    }
+    .tl-text {}
+    .tl-label {
+      font-size: .75rem;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: .06em;
+      margin-bottom: 2px;
+    }
+    .tl-desc {
+      font-size: .9rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Letter card ── */
+    .letter-card .card-body {
+      font-size: .96rem;
+      line-height: 2.1;
+    }
+
+    /* ── From children ── */
+    .from-card {
+      margin: 18px 20px 0;
+      background: linear-gradient(135deg, var(--deep) 0%, #c9736a 100%);
+      border-radius: 20px;
+      padding: 30px 26px;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .from-card::before {
+      content: '♥';
+      position: absolute;
+      font-size: 12rem;
+      opacity: .04;
+      top: -30px; right: -20px;
+      line-height: 1;
+    }
+    .from-ornament {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      letter-spacing: .2em;
+    }
+    .from-msg {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.05rem;
+      line-height: 2;
+      opacity: .92;
+    }
+    .from-names {
+      margin-top: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--gold-light);
+      letter-spacing: .05em;
+    }
+    .from-names small {
+      display: block;
+      font-family: 'Noto Serif KR', serif;
+      font-style: normal;
+      font-size: .8rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+      letter-spacing: .12em;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 28px 20px 0;
+      font-size: .8rem;
+      color: var(--text-light);
+      font-family: 'Noto Sans KR', sans-serif;
+      letter-spacing: .06em;
+    }
+    .footer .heart-row {
+      font-size: 1.5rem;
+      letter-spacing: .3em;
+      margin-bottom: 8px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.15); }
+    }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 26px;
+      margin: 20px 20px 0;
+    }
+    .divider-line { flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .divider-icon { color: var(--gold); font-size: 1rem; }
+  </style>
+</head>
+<body>
+
+<!-- Floating petals -->
+<div class="petals" id="petals"></div>
+
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-ornament">✦ ❀ ✦</div>
+    <div class="hero-label">Happy Anniversary</div>
+    <h1 class="hero-title">
+      결혼기념일<br>
+      <span>축하드립니다</span>
+    </h1>
+    <div class="hero-date">📅 2026년 5월 5일</div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 430 55" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,20 C80,55 200,0 300,30 C360,50 400,20 430,35 L430,55 L0,55 Z" fill="#fdf6ee"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Rings -->
+  <div class="rings">
+    <div class="ring ring-gold"><span>💍</span></div>
+    <div class="ring ring-rose"><span class="ring-heart">💗</span></div>
+  </div>
+
+  <!-- 축하 메시지 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">💌</span> 사랑하는 아버지, 어머니께</div>
+    <div class="card-body">
+      오늘은 두 분이 하나가 되신 소중한 날,<br>
+      <em>결혼기념일을 진심으로 축하드립니다.</em><br><br>
+      두 분의 사랑이 있었기에 저희 한결이와 한울이가
+      이 세상에서 가장 따뜻한 가정 안에서 자랄 수 있었어요.<br><br>
+      언제나 서로를 아끼고 배려하는 두 분의 모습이
+      저희에게 가장 큰 가르침이자 행복이었습니다. 💕
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">✿</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 타임라인 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">⏳</span> 두 분의 이야기</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">💑</div>
+        <div class="tl-text">
+          <div class="tl-label">처음 만남</div>
+          <div class="tl-desc">두 분이 인연을 맺고 서로를 알아가던 특별한 시간</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">💒</div>
+        <div class="tl-text">
+          <div class="tl-label">결혼 · 새로운 시작</div>
+          <div class="tl-desc">약속을 나누고 평생의 동반자로 함께하기로 한 날</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">👨‍👩‍👧‍👦</div>
+        <div class="tl-text">
+          <div class="tl-label">지금 이 순간</div>
+          <div class="tl-desc">한결·한울과 함께 만들어가는 우리 가족의 빛나는 날들</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">✿</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 편지 1: 낳아주시고 길러주셔서 감사합니다 -->
+  <div class="card letter-card">
+    <div class="card-title"><span class="icon">🌱</span> 낳아주시고 길러주셔서 감사합니다</div>
+    <div class="card-body">
+      사랑하는 아버지, 어머니께.<br><br>
+
+      오늘 두 분의 결혼기념일을 맞아, 평소에 말로 다 전하지 못했던 감사한 마음을 이렇게 편지로 적어봅니다.<br><br>
+
+      저희가 세상에 태어날 수 있었던 것, 그 자체가 두 분이 주신 첫 번째이자 가장 큰 선물이었습니다. 아무것도 모르던 작은 생명을 품에 안아 주시고, 밤새 울어도 지치지 않고 달래 주시고, 아플 때마다 두 분의 마음이 더 아프셨을 텐데도 늘 웃는 얼굴로 곁에 계셔 주셨지요.<br><br>
+
+      어릴 적 어머니의 손을 잡고 걷던 골목길, 아버지의 넓은 등에 업혀서 잠들던 기억이 아직도 선명합니다. 그 온기가 저희를 지금의 한결이와 한울이로 만들어 주었습니다.<br><br>
+
+      밥 한 끼도 허투루 차리지 않으셨던 어머니, 새벽같이 일어나 가족을 위해 묵묵히 일하셨던 아버지. 두 분이 희생해 오신 모든 날들이 저희에게는 아낌없이 부어주신 사랑이었습니다. 그 사랑 덕분에 저희가 따뜻하게 자랄 수 있었고, 지금 여기에 서 있을 수 있습니다.<br><br>
+
+      철없던 시절, 두 분의 마음을 헤아리지 못하고 속상하게 해드렸던 순간들이 떠오를 때마다 가슴이 먹먹합니다. 그때도 두 분은 한 번도 포기하지 않으시고 저희를 믿어 주셨지요. 그 믿음이 저희를 일으켜 세웠습니다.<br><br>
+
+      낳아 주셔서 감사합니다. 길러 주셔서 감사합니다. 그리고 지금껏 변함없이 사랑해 주셔서 진심으로 감사드립니다. 이 감사함은 평생을 다해도 다 갚을 수 없겠지만, 두 분처럼 따뜻하고 성실한 사람으로 살아가는 것이 저희가 할 수 있는 최선의 보답이라 믿습니다.<br><br>
+
+      <em>사랑합니다, 아버지. 사랑합니다, 어머니.</em>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">✝</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 편지 2: 신앙으로 키워주셔서 감사합니다 -->
+  <div class="card letter-card">
+    <div class="card-title"><span class="icon">🙏</span> 신앙으로 키워주셔서 감사합니다</div>
+    <div class="card-body">
+      사랑하는 아버지, 어머니께.<br><br>
+
+      두 분께 꼭 전하고 싶었던 또 하나의 감사가 있습니다. 바로 저희를 믿음 안에서 자라게 해 주신 것입니다.<br><br>
+
+      어릴 때부터 손을 잡고 교회에 데려가 주시고, 밥상 앞에서 함께 감사 기도를 드리고, 잠자리에 들기 전 두 손 모아 기도하는 법을 가르쳐 주신 두 분. 그때는 그것이 얼마나 귀한 일인지 미처 몰랐습니다.<br><br>
+
+      살아가다 보면 혼자서는 감당하기 어려운 순간들이 찾아옵니다. 막막하고 두렵고, 어디에도 기댈 곳이 없는 것 같을 때, 저희가 기도할 수 있었던 것은 두 분이 심어 주신 믿음 덕분이었습니다. 어두운 밤에도 흔들리지 않을 수 있었던 것은, 두 분이 살아오신 신앙의 모습이 마음속 깊이 뿌리내려 있었기 때문입니다.<br><br>
+
+      말씀을 삶으로 보여주신 두 분의 모습이 저희에게 가장 생생한 신앙 교육이었습니다. 어려운 이웃을 외면하지 않으시고, 힘든 시간에도 감사를 잃지 않으시고, 서로를 위해 기도하며 살아오신 두 분. 그 뒷모습이 저희의 길이 되었습니다.<br><br>
+
+      세상이 아무리 흔들려도 하나님 안에서 중심을 잃지 않는 것, 사람을 사랑하고 겸손히 섬기는 것, 감사하며 하루를 사는 것 — 이 모든 것을 두 분이 먼저 삶으로 가르쳐 주셨습니다.<br><br>
+
+      저희도 두 분처럼 믿음으로 뿌리내리고, 사랑으로 열매 맺는 삶을 살아가겠습니다. 두 분이 쌓아오신 기도 위에 저희의 삶이 세워져 있음을 잊지 않겠습니다.<br><br>
+
+      <em>신앙을 물려주셔서 진심으로 감사합니다. 두 분을 통해 하나님의 사랑을 배웠습니다.</em>
+    </div>
+  </div>
+
+  <!-- From children -->
+  <div class="from-card">
+    <div class="from-ornament">🌹 🙏 🌹</div>
+    <div class="from-msg">
+      두 분의 결혼기념일을 온 마음으로 축하드립니다.<br><br>
+      앞으로도 건강하시고, 늘 기쁨이 넘치시며,<br>
+      하나님의 은혜 안에서 더욱 행복하시길<br>
+      두 손 모아 기도합니다. 💕
+    </div>
+    <div class="from-names">
+      한결 &amp; 한울
+      <small>자녀 드림 · 2026. 05. 05</small>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="heart-row">♥ ♥ ♥</div>
+    Happy Anniversary, Mom &amp; Dad
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // Generate floating petals
+  const container = document.getElementById('petals');
+  const symbols = ['🌸','🌺','🌹','💮','🌷','✿','❀','💕'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.fontSize = (.7 + Math.random() * .8) + 'rem';
+    p.style.animationDuration = (7 + Math.random() * 9) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.opacity = (.3 + Math.random() * .5).toString();
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>
